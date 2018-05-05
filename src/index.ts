@@ -2,6 +2,7 @@ import { bootstrap } from './server/app/main';
 import { P2pServer } from './server/p2p-server';
 import { Blockchain } from 'server/blockchain';
 import { AppService } from 'server/app/app.service';
+import { Wallet } from 'server/wallet';
 
 const boot = async () => {
     const app = await bootstrap();
@@ -12,8 +13,7 @@ const boot = async () => {
 
 boot()
     .then((blockchain) => {
-        for (let i = 0; i < 10; i++) {
-            console.info(blockchain.addBlock(`foo ${i + 1}`).toString());
-        }
+        const wallet = new Wallet();
+        console.info(wallet.toString());
     })
     .catch(err => console.error(err));

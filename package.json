@@ -7,7 +7,7 @@
     "test:watch": "jest --watchAll",
     "test": "jest",
     "format": "prettier --write \"**/*.ts\"",
-    "start": "ts-node -r tsconfig-paths/register src/index.ts",    
+    "start": "ts-node -r tsconfig-paths/register src/index.ts",
     "start:2": "set HTTP_PORT=3002 && set P2P_PORT=5002 && set PEERS=ws://localhost:5001 && npm start",
     "start:3": "set HTTP_PORT=3003 && set P2P_PORT=5003 && set PEERS=ws://localhost:5001,ws://localhost:5002 && npm start",
     "start:watch": "nodemon -e ts -w ./src -x npm start",
@@ -55,8 +55,11 @@
     "@nestjs/testing": "^5.0.0-rc.2",
     "@nestjs/websockets": "^5.0.0-rc.2",
     "crypto-js": "^3.1.9-1",
+    "elliptic": "^6.4.0",
+    "jest-cli": "^22.4.3",
     "reflect-metadata": "^0.1.12",
     "rxjs": "^6.1.0",
-    "typescript": "^2.6.2"
+    "typescript": "^2.6.2",
+    "uuid": "^3.2.1"
   }
 }

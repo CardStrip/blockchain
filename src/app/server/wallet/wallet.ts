@@ -1,6 +1,7 @@
 import { INITIAL_BALANCE } from '../config';
 import { ChainUtil } from '../chain.util';
 import { TransactionPool, Transaction } from '../transaction';
+import { Blockchain } from '../blockchain';
 
 export class Wallet {
     public address: string;
@@ -23,7 +24,9 @@ export class Wallet {
         return this.keyPair.sign(dataHash);
     }
 
-    public createTransaction(recipient: string, amount: number, transactionPool: TransactionPool) {
+    public createTransaction(recipient: string, amount: number, blockchain: Blockchain, transactionPool: TransactionPool) {
+        this.balance = this.calculateBalance(blockchain);
+
         if (amount > this.balance) {
             console.warn(`Amount: ${amount} exceeds current balance of ${this.balance}`);
             return;
@@ -40,6 +43,40 @@ export class Wallet {
         return transaction;
     }
 
+    public calculateBalance(blockchain: Blockchain) {
+        let balance = this.balance;
+
+        const transactions = [];
+        blockchain.chain.forEach(block => {
+            block.data.forEach(transaction => {
+                transactions.push(transaction);
+            });
+        });
+        const walletInputTs = transactions
+            .filter(transaction => transaction.input.address === this.publicKey);
+
+        let startTime = 0;
+
+        if ( walletInputTs.length > 0 ) {
+            const recentInputT = walletInputTs.reduce(
+                (prev, current) => prev.input.timestamp > current.input.timestamp ? prev : current,
+            );
+            balance = recentInputT.outputs.find(output => output.address === this.publicKey).amount;
+            startTime = recentInputT.input.timestamp;
+        }
+
+        transactions.forEach(transaction => {
+            if (transaction.input.timestamp > startTime) {
+                transaction.outputs.find(output => {
+                    if (output.address === this.publicKey) {
+                        balance += output.amount;
+                    }
+                });
+            }
+        });
+
+        return balance;
+    }
     public toString() {
         return `wallet:
   publicKey : ${this.publicKey.toString()}

@@ -1,8 +1,10 @@
 import { Transaction } from './transaction';
 import { Wallet } from '../wallet';
 import { TransactionPool } from './transaction.pool';
+import { Blockchain } from '../blockchain';
 
 describe('TransactionPool', () => {
+    let blockchain: Blockchain;
     let tp: TransactionPool;
     let wallet: Wallet;
     let transaction: Transaction;
@@ -10,7 +12,8 @@ describe('TransactionPool', () => {
     beforeEach(() => {
         tp = new TransactionPool();
         wallet = new Wallet();
-        transaction = wallet.createTransaction('r4nd-4dr355', 50, tp);
+        blockchain = new Blockchain();
+        transaction = wallet.createTransaction('r4nd-4dr355', 50, blockchain, tp);
     });
 
     it('should add transaction', () => {
@@ -36,7 +39,7 @@ describe('TransactionPool', () => {
             validTransactions = [...tp.transactions];
             for (let i = 0; i < 6; i++) {
                 wallet = new Wallet();
-                transaction = wallet.createTransaction('r4nd-4dr355', 50, tp);
+                transaction = wallet.createTransaction('r4nd-4dr355', 50, blockchain, tp);
                 if (i % 2 === 0) {
                     transaction.input.amount = 9999;
                 } else {

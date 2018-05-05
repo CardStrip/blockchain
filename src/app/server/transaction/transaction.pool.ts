@@ -21,4 +21,24 @@ export class TransactionPool {
         return this.transactions.find(t => t.input.address === address);
     }
 
+    public validTransactions() {
+        return this.transactions.filter(transaction => {
+            const outputTotal = transaction.outputs.reduce((total, output) => {
+                return total + output.amount;
+            }, 0) ;
+
+            if (transaction.input.amount !== outputTotal ) {
+                console.warn(`Invalid transaction from ${transaction.input.address.substring(0, 10)}...`);
+                return;
+            }
+
+            if (!Transaction.verify(transaction)) {
+                console.warn(`Invalid signature from ${transaction.input.address.substring(0, 10)}...`);
+                return;
+            }
+
+            return transaction;
+        });
+    }
+
 }

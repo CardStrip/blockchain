@@ -15,7 +15,6 @@ export class AppService {
     this.blockchain = new Blockchain();
     this.trxPool = new TransactionPool();
     this.server = new P2pServer(this.blockchain, this.trxPool);
-
     this.wallet = new Wallet();
   }
 

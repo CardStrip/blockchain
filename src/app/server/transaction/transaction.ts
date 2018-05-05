@@ -2,6 +2,7 @@ import { ChainUtil } from '../chain.util';
 import { Wallet } from '../wallet';
 import { Input } from './input';
 import { Output } from './output';
+import { MINING_REWARD } from '../config';
 
 export class Transaction {
     public id: string;
@@ -9,26 +10,33 @@ export class Transaction {
     public outputs: Output[];
     public signature: string;
 
-    public static newTransaction(sender: Wallet, recipient: string, amount: number) {
+    private static transactionWithOutputs(sender: Wallet, outputs: Output[]) {
         const transaction = new Transaction();
+        transaction.outputs.push(...outputs);
+        Transaction.sign(transaction, sender);
 
+        return transaction;
+    }
+
+    public static newTransaction(sender: Wallet, recipient: string, amount: number) {
         // validates senders balance;
         if (amount > sender.balance) {
             console.warn(`Amount: ${amount} exceeds balance`);
             return;
         }
 
-        // creates transaction inputs;
-        transaction.outputs.push(...[
+        // returns new transaction;
+        return Transaction.transactionWithOutputs(sender, [
             { amount: sender.balance - amount, address: sender.publicKey },
             { amount, address: recipient },
         ]);
+    }
 
-        // signs transaction;
-        Transaction.sign(transaction, sender);
-
-        // returns new transaction;
-        return transaction;
+    public static rewardTransaction(miner: Wallet, blockchain: Wallet) {
+        return Transaction.transactionWithOutputs(blockchain, [{
+            amount: MINING_REWARD,
+            address: miner.publicKey,
+        }]);
     }
 
     private static sign(transaction: Transaction, sender: Wallet) {

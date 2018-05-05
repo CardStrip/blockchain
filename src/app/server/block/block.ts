@@ -1,4 +1,4 @@
-import { DIFFICULITY, MINE_RATE } from '../config';
+import { DIFFICULITY, MINING_RATE } from '../config';
 import { ChainUtil } from '../chain.util';
 
 export class Block {
@@ -35,7 +35,7 @@ export class Block {
 
     public static adjustDifficulity(lastBlock: Block, currentTime: number): number {
         let { difficulity } = lastBlock;
-        difficulity = lastBlock.timestamp + MINE_RATE > currentTime ? difficulity + 1 : difficulity - 1 ;
+        difficulity = lastBlock.timestamp + MINING_RATE > currentTime ? difficulity + 1 : difficulity - 1 ;
         return difficulity;
     }
     constructor(

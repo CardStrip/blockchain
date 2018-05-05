@@ -7,6 +7,12 @@ export class Wallet {
     public keyPair: any;
     public publicKey: string;
 
+    public static blockchainWallet() {
+        const wallet = new Wallet();
+        wallet.publicKey = 'blockchain-wallet';
+        return wallet;
+    }
+
     constructor() {
         this.keyPair = ChainUtil.genKeyPair();
         this.publicKey = this.keyPair.getPublic().encode('hex');

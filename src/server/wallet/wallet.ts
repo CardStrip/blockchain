@@ -7,8 +7,12 @@ export class Wallet {
     public publicKey: string;
 
     constructor() {
-        this.keyPair = ChainUtil.GenKeyPair();
+        this.keyPair = ChainUtil.genKeyPair();
         this.publicKey = this.keyPair.getPublic().encode('hex');
+    }
+
+    public sign(dataHash: string): string {
+        return this.keyPair.sign(dataHash);
     }
 
     public toString() {

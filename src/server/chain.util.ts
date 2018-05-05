@@ -1,15 +1,21 @@
+import { SHA256 } from 'crypto-js';
+import { v1 } from 'uuid';
+
 const EC = require('elliptic').ec;
 const ec = new EC('secp256k1');
-const uuidV1 = require('uuid/v1');
+
 export class ChainUtil {
 
-    public static GenKeyPair() {
+    public static genKeyPair() {
         return ec.genKeyPair();
     }
 
     public static id() {
-        return uuidV1();
+        return v1();
     }
 
+    public static hash(data: any) {
+        return SHA256(JSON.stringify(data)).toString();
+    }
     constructor() {}
 }

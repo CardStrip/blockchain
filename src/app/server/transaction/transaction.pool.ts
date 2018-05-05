@@ -24,8 +24,8 @@ export class TransactionPool {
     public validTransactions() {
         return this.transactions.filter(transaction => {
             const outputTotal = transaction.outputs.reduce((total, output) => {
-                return total + output.amount;
-            }, 0) ;
+                return Number(total) + Number(output.amount);
+            }, 0);
 
             if (transaction.input.amount !== outputTotal ) {
                 console.warn(`Invalid transaction from ${transaction.input.address.substring(0, 10)}...`);
@@ -39,6 +39,10 @@ export class TransactionPool {
 
             return transaction;
         });
+    }
+
+    public clear() {
+        this.transactions = [];
     }
 
 }

@@ -33,6 +33,14 @@ export class AppController {
     return this.service.trxPool.transactions;
   }
 
+  @Get('/mine-transactions')
+  public mineTransaction() {
+    const block = this.service.miner.mine();
+    console.log(`New block added: ${block.toString()}`);
+
+    return this.blocks();
+  }
+
   @Post('/mine')
   public mine(@Body() block: Block) {
     this.service.blockchain.addBlock(block);

@@ -5,6 +5,7 @@ import { TransactionPool, Transaction } from './transaction';
 enum MESSAGE_TYPES {
     chain = 'CHAIN',
     transaction = 'TRANSACTION',
+    clear = 'CLEAR',
 }
 
 export class P2pServer {
@@ -59,6 +60,9 @@ export class P2pServer {
                 case MESSAGE_TYPES.transaction:
                     this.trxPool.updateOrAddTransaction(data.transaction);
                     break;
+                case MESSAGE_TYPES.clear:
+                    this.trxPool.clear();
+                    break;
                 default:
                     console.warn('Unknown message type');
                     break;
@@ -86,6 +90,12 @@ export class P2pServer {
             type: MESSAGE_TYPES.transaction,
             transaction,
         }));
+    }
+
+    public broadcastClearTransactions() {
+        this.sockets.forEach(socket => socket.send(JSON.stringify({
+            type: MESSAGE_TYPES.clear,
+        })));
     }
 
 }

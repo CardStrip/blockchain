@@ -1,5 +1,6 @@
 import { DIFFICULITY, MINING_RATE } from '../config';
 import { ChainUtil } from '../chain.util';
+import { Transaction } from '../transaction';
 
 export class Block {
 
@@ -7,7 +8,7 @@ export class Block {
         return new Block(new Date(2018, 5, 1, 0, 1, 30).getTime(), '-----', 'f1r57-h45h', [], 0, DIFFICULITY);
     }
 
-    public static mineBlock(lastBlock: Block, data: any) {
+    public static mineBlock(lastBlock: Block, data: Transaction[]) {
         let nonce = 0;
         let hash: string;
         let timestamp = Date.now();
@@ -42,7 +43,7 @@ export class Block {
         public timestamp: number,
         public lastHash: string,
         public hash: string,
-        public data: any,
+        public data: Transaction[],
         public nonce: number,
         public difficulity: number = DIFFICULITY ) {
     }

@@ -3,13 +3,14 @@ import { ChainUtil } from '../chain.util';
 import { TransactionPool, Transaction } from '../transaction';
 
 export class Wallet {
+    public address: string;
     public balance = INITIAL_BALANCE;
     public keyPair: any;
     public publicKey: string;
 
     public static blockchainWallet() {
         const wallet = new Wallet();
-        wallet.publicKey = 'blockchain-wallet';
+        wallet.address = 'blockchain-wallet';
         return wallet;
     }
 

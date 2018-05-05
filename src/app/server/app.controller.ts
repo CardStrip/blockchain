@@ -45,6 +45,7 @@ export class AppController {
 
     if (isValid) {
       const trx = this.service.wallet.createTransaction(req.recipient, req.amount, this.service.trxPool);
+      this.service.server.broadcast(trx);
     } else {
       console.warn('Transaction request is not valid');
     }

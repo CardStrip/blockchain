@@ -4,8 +4,6 @@
   "description": "Contains the CardStrip blockchain",
   "main": "dist/index.js",
   "scripts": {
-    "watch": "nodemon -e ts -w ./src -x npm run watch:serve",
-    "watch:serve": "ts-node src/index.ts",
     "test:watch": "jest --watchAll",
     "test": "jest",
     "format": "prettier --write \"**/*.ts\"",

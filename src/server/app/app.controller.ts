@@ -2,15 +2,12 @@ import { Body } from '@nestjs/common';
 import { Get, Controller, Post } from '@nestjs/common';
 import { Blockchain } from '../blockchain';
 import { Block } from '../block';
-import { BlockchainService } from './services/blockchain.service';
+import { AppService } from './app.service';
 
 @Controller()
 export class AppController {
-  public blockchain: Blockchain;
 
-  constructor(private readonly service: BlockchainService) {
-    this.blockchain = service.blockchain;
-    console.log('bc => ' + this.blockchain);
+  constructor(public readonly service: AppService) {
   }
 
   @Get()
@@ -20,13 +17,14 @@ export class AppController {
 
   @Get('/blocks')
   public blocks(): Block[] {
-    return this.blockchain.chain;
+    return this.service.blockchain.chain;
   }
 
   @Post('/mine')
   public mine(@Body() block: Block) {
-    this.blockchain.addBlock(block);
+    this.service.blockchain.addBlock(block);
     console.info('block added ...');
+    this.service.server.sync();
     return this.blocks();
   }
 }

@@ -3,7 +3,7 @@ import { INestApplication } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { Blockchain } from '../blockchain';
 import { Block } from '../block';
-import { BlockchainService } from './services/blockchain.service';
+import { AppService } from './app.service';
 
 describe('AppController', () => {
   let app: TestingModule;
@@ -11,7 +11,7 @@ describe('AppController', () => {
   beforeAll(async () => {
     app = await Test.createTestingModule({
       controllers: [AppController],
-      providers: [BlockchainService],
+      providers: [AppService],
     }).compile();
   });
 
@@ -25,17 +25,17 @@ describe('AppController', () => {
   describe('blocks', () => {
     it('should return the genesis block', () => {
       const appController = app.get<AppController>(AppController);
-      expect(appController.blocks()).toEqual(appController.blockchain.chain);
+      expect(appController.blocks()).toEqual(appController.service.blockchain.chain);
     });
   });
 
   describe('mine', () => {
     it('should return the blocks', () => {
-      const blockchain = app.get<BlockchainService>(BlockchainService).blockchain;
+      const blockchain = app.get<AppService>(AppService).blockchain;
       const block = Block.mineBlock(blockchain.getLastBlock(), 'foobar1');
       const appController = app.get<AppController>(AppController);
       const chain = appController.mine(block);
-      expect(chain).toEqual(appController.blockchain.chain);
+      expect(chain).toEqual(appController.service.blockchain.chain);
     });
   });
 });

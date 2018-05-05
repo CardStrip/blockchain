@@ -1,5 +1,5 @@
-import { Server } from 'ws';
 import { Blockchain } from './blockchain';
+import * as WebSocket from 'ws';
 
 export class P2pServer {
     private sockets: WebSocket[];
@@ -11,8 +11,8 @@ export class P2pServer {
         this.sockets = [];
     }
 
-    private listen() {
-        const server = new Server({
+    public listen() {
+        const server = new WebSocket.Server({
             port: this.P2P_PORT,
         });
         server.on('connection', (socket: WebSocket) => {
@@ -31,8 +31,27 @@ export class P2pServer {
             socket.addEventListener('open', () => this.connectSocket(socket));
         });
     }
+
     private connectSocket(socket: WebSocket) {
         this.sockets.push(socket);
         console.info('Socket connected');
+
+        this.messageHandler(socket);
+        this.sendChain(socket);
+    }
+
+    private messageHandler(socket: WebSocket) {
+        socket.addEventListener('message', (message) => {
+            const data =  JSON.parse(message.data);
+            this.blockchain.replaceChain(data);
+        });
+    }
+
+    public sync() {
+        this.sockets.forEach(socket => this.sendChain(socket));
+    }
+
+    private sendChain(socket: WebSocket) {
+        socket.send(JSON.stringify(this.blockchain.chain));
     }
 }

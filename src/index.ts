@@ -7,6 +7,13 @@ const boot = async () => {
     const app = await bootstrap();
     const service = app.get<AppService>(AppService);
     service.server.listen();
+    return service.blockchain;
 };
 
-boot().catch(err => console.error(err));
+boot()
+    .then((blockchain) => {
+        for (let i = 0; i < 10; i++) {
+            console.info(blockchain.addBlock(`foo ${i + 1}`).toString());
+        }
+    })
+    .catch(err => console.error(err));

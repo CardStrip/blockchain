@@ -1,0 +1,5 @@
+
+const DIFFICULITY = 4;
+const MINE_RATE = 3000;
+
+export { DIFFICULITY, MINE_RATE };

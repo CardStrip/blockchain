@@ -1,40 +1,60 @@
 import { SHA256 } from 'crypto-js';
+import { DIFFICULITY, MINE_RATE } from '../config';
 
 export class Block {
 
     public static genesis() {
-        return new Block(new Date(2018, 5, 1, 0, 1, 30).getUTCSeconds(), '-----', 'f1r57-h45h', []);
+        return new Block(new Date(2018, 5, 1, 0, 1, 30).getTime(), '-----', 'f1r57-h45h', [], 0, DIFFICULITY);
     }
 
     public static mineBlock(lastBlock: Block, data: any) {
-        const timestamp = Date.now();
+        let nonce = 0;
+        let hash: string;
+        let timestamp = Date.now();
+        let { difficulity } = lastBlock;
         const lastHash = lastBlock.hash;
-        const hash = Block.hash(timestamp, lastHash, data);
-        return new Block(timestamp, lastHash, hash, data);
+
+        do {
+            nonce++;
+            timestamp = Date.now();
+            difficulity = Block.adjustDifficulity(lastBlock, timestamp);
+            hash = Block.hash(timestamp, lastHash, data, nonce, difficulity);
+        } while (hash.substring(0, difficulity) !== '0'.repeat(difficulity));
+
+        return new Block(timestamp, lastHash, hash, data, nonce, difficulity);
     }
 
-    public static hash(timestamp: number, lastHash: string, data: any) {
-        return SHA256(`${timestamp}${lastHash}${data}`).toString();
+    public static hash(timestamp: number, lastHash: string, data: any, nonce: number, difficulity: number) {
+        return SHA256(`${timestamp}${lastHash}${data}${nonce}${difficulity}`).toString();
     }
 
     public static blockHash(block: Block) {
-        const { timestamp, lastHash, data} = block;
-        return Block.hash(timestamp, lastHash, data);
+        const { timestamp, lastHash, data, nonce, difficulity} = block;
+        return Block.hash(timestamp, lastHash, data, nonce, difficulity);
     }
 
+    public static adjustDifficulity(lastBlock: Block, currentTime: number): number {
+        let { difficulity } = lastBlock;
+        difficulity = lastBlock.timestamp + MINE_RATE > currentTime ? difficulity + 1 : difficulity - 1 ;
+        return difficulity;
+    }
     constructor(
         public timestamp: number,
         public lastHash: string,
         public hash: string,
-        public data: any ) {
+        public data: any,
+        public nonce: number,
+        public difficulity: number = DIFFICULITY ) {
     }
 
     public toString() {
         return `block:
-  timestamp : ${this.timestamp}
-  Last Hash : ${this.lastHash.substring(0, 10)}
-  Hash      : ${this.hash.substring(0, 10)}
-  data      : ${this.data}
+  timestamp  : ${this.timestamp}
+  Last Hash  : ${this.lastHash.substring(0, 10)}
+  Hash       : ${this.hash.substring(0, 10)}
+  data       : ${this.data}
+  nonce      : ${this.nonce}
+  difficulity: ${this.difficulity}
  `;
     }
 }

@@ -29,13 +29,13 @@ describe('AppController', () => {
     });
   });
 
-  describe('mine', () => {
-    it('should return the blocks', () => {
-      const blockchain = app.get<AppService>(AppService).blockchain;
-      const block = Block.mineBlock(blockchain.getLastBlock(), 'foobar1');
-      const appController = app.get<AppController>(AppController);
-      const chain = appController.mine(block);
-      expect(chain).toEqual(appController.service.blockchain.chain);
-    });
-  });
+  // describe('mine', () => {
+  //   it('should return the blocks', () => {
+  //     const blockchain = app.get<AppService>(AppService).blockchain;
+  //     const block = Block.mineBlock(blockchain.getLastBlock(), 'foobar1');
+  //     const appController = app.get<AppController>(AppController);
+  //     const chain = appController.mine(block);
+  //     expect(chain).toEqual(appController.service.blockchain.chain);
+  //   });
+  // });
 });

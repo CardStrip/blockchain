@@ -22,7 +22,7 @@ export class Wallet {
             return;
         }
 
-        let transaction = TransactionPool.find(this.publicKey);
+        let transaction = transactionPool.find(this.publicKey);
         if (transaction) {
             transaction.update(this, recipient, amount);
         } else {

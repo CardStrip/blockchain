@@ -17,4 +17,8 @@ export class TransactionPool {
         }
     }
 
+    public find(address: string) {
+        return this.transactions.find(t => t.input.address === address);
+    }
+
 }

@@ -17,5 +17,9 @@ export class ChainUtil {
     public static hash(data: any) {
         return SHA256(JSON.stringify(data)).toString();
     }
-    constructor() {}
+
+    public static verifySignature(publicKey: string, signature: string, dataHash: string) {
+        return ec.keyFromPublic(publicKey, 'hex').verify(dataHash, signature);
+    }
+
 }

@@ -25,13 +25,13 @@ export class Transaction {
         ]);
 
         // signs transaction;
-        Transaction.signTransaction(transaction, sender);
+        Transaction.sign(transaction, sender);
 
         // returns new transaction;
         return transaction;
     }
 
-    private static signTransaction(transaction: Transaction, sender: Wallet) {
+    private static sign(transaction: Transaction, sender: Wallet) {
         transaction.input = {
             timestamp: Date.now(),
             amount: sender.balance,
@@ -39,6 +39,15 @@ export class Transaction {
             signature: sender.sign(ChainUtil.hash(transaction.outputs)),
         };
     }
+
+    public static verify(transaction: Transaction) {
+        return ChainUtil.verifySignature (
+            transaction.input.address,
+            transaction.input.signature,
+            ChainUtil.hash(transaction.outputs),
+        );
+    }
+
     constructor() {
         this.id = ChainUtil.id();
         this.outputs = [];

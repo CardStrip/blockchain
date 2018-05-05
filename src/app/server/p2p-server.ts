@@ -38,6 +38,8 @@ export class P2pServer {
             const socket = new WebSocket(peer);
 
             socket.addEventListener('open', () => this.connectSocket(socket));
+            // socket.addEventListener('disconnect', () => this.sockets.splice(this.sockets.indexOf(socket), 1));
+            // socket.addEventListener('error', () => this.sockets.splice(this.sockets.indexOf(socket), 1));
         });
     }
 

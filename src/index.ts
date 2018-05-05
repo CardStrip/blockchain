@@ -8,12 +8,11 @@ const boot = async () => {
     const app = await bootstrap();
     const service = app.get<AppService>(AppService);
     service.server.listen();
-    return service.blockchain;
+    return service;
 };
 
 boot()
-    .then((blockchain) => {
-        const wallet = new Wallet();
-        console.info(wallet.toString());
+    .then((service) => {
+        console.info(service.wallet.toString());
     })
     .catch(err => console.error(err));

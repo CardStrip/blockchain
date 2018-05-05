@@ -37,7 +37,7 @@ describe('Transaction', () => {
         expect(Transaction.verify(transaction)).toBe(false);
     });
 
-    describe('exceeding wallet balance', () => {
+    describe('exceeds wallet balance', () => {
 
         beforeEach(() => {
             amount = 50000;
@@ -50,6 +50,29 @@ describe('Transaction', () => {
 
     });
 
+    describe('updates with next transaction', () => {
+        let nextAmount: number;
+        let nextRecipient: string;
+
+        beforeEach(() => {
+            nextAmount = 20;
+            nextRecipient = 'n3xt-4ddr355';
+            transaction = transaction.update(wallet, nextRecipient, nextAmount );
+        });
+
+        it('should deduct next amount from senders output', () => {
+            expect(transaction.outputs.find(output => output.address === wallet.publicKey).amount)
+                .toEqual(wallet.balance - amount - nextAmount);
+        });
+
+        it('should output amount for next recipient', () => {
+            expect(transaction.outputs.find(output => output.address === nextRecipient).amount)
+                .toEqual(nextAmount);
+        });
+
+    });
 });
 
+// describe('', () => {});
+// beforeEach(() => {});
 // it('', () => {});

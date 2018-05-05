@@ -5,6 +5,7 @@ export class P2pServer {
     private sockets: WebSocket[];
     private P2P_PORT = Number(process.env.P2P_PORT || 5001);
     private peers: string[] = process.env.PEERS ? process.env.PEERS.split(',') : [];
+
     constructor(
         private blockchain: Blockchain,
     ) {
@@ -54,4 +55,5 @@ export class P2pServer {
     private sendChain(socket: WebSocket) {
         socket.send(JSON.stringify(this.blockchain.chain));
     }
+
 }

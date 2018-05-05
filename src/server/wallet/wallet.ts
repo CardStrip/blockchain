@@ -21,4 +21,5 @@ export class Wallet {
   balance   : ${this.balance}
 `;
     }
+
 }

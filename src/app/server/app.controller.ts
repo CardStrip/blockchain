@@ -1,7 +1,7 @@
 import { Body } from '@nestjs/common';
 import { Get, Controller, Post } from '@nestjs/common';
-import { Blockchain } from '../blockchain';
-import { Block } from '../block';
+import { Blockchain } from './blockchain';
+import { Block } from './block';
 import { AppService } from './app.service';
 
 @Controller()

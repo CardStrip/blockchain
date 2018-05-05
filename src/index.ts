@@ -1,8 +1,8 @@
-import { bootstrap } from './server/app/main';
-import { P2pServer } from './server/p2p-server';
-import { Blockchain } from 'server/blockchain';
-import { AppService } from 'server/app/app.service';
-import { Wallet } from 'server/wallet';
+import { bootstrap } from './app/server/main';
+import { P2pServer } from './app/server/p2p-server';
+import { Blockchain } from './app/server/blockchain';
+import { AppService } from './app/server/app.service';
+import { Wallet } from './app/server/wallet';
 
 const boot = async () => {
     const app = await bootstrap();

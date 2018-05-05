@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import { AppController } from './app.controller';
-import { Blockchain } from '../blockchain';
-import { Block } from '../block';
+import { Blockchain } from './blockchain';
+import { Block } from './block';
 import { AppService } from './app.service';
 
 describe('AppController', () => {

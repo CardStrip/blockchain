@@ -18,6 +18,11 @@ export class AppController {
     return 'Hello World!';
   }
 
+  @Get('/publickey')
+  public publickey() {
+    return this.service.wallet.publicKey;
+  }
+
   @Get('/blocks')
   public blocks(): Block[] {
     return this.service.blockchain.chain;
@@ -52,4 +57,5 @@ export class AppController {
 
     return this.transactions();
   }
+
 }

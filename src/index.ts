@@ -1,18 +1,11 @@
-import { bootstrap } from './app/server/main';
-import { MessageServer } from './app/server/websocket';
-import { Blockchain } from './app/server/blockchain';
-import { AppService } from './app/server/blockchain.service';
-import { Wallet } from './app/server/wallet';
+import { main, BlockchainService } from 'app/server';
 
-const boot = async () => {
-    const app = await bootstrap();
-    const service = app.get<AppService>(AppService);
-    service.server.listen();
-    return service;
+const bootstrap = async () => {
+    return await main();
 };
 
-boot()
-    .then((service) => {
-        console.info(service.wallet.toString());
+bootstrap()
+    .then((app) => {
+        console.info('app booted');
     })
     .catch(err => console.error(err));

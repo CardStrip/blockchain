@@ -1,8 +1,9 @@
-import { INITIAL_BALANCE } from '../config';
-import { ChainUtil } from '../chain.util';
-import { TransactionPool, Transaction } from '../transaction';
-import { Blockchain } from '../blockchain';
 import { Injectable } from '@nestjs/common';
+
+import { Blockchain } from '../blockchain';
+import { ChainUtil } from '../chain.util';
+import { INITIAL_BALANCE } from '../config';
+import { Transaction, TransactionPool } from '../transaction';
 
 @Injectable()
 export class Wallet {

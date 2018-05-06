@@ -4,7 +4,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { Block } from './block';
 import { Blockchain } from './blockchain';
 import { BlockchainController } from './blockchain.controller';
-import { AppService } from './blockchain.service';
+import { BlockchainService } from './blockchain.service';
 import { Miner } from './miner';
 import { TransactionPool } from './transaction';
 import { Wallet } from './wallet';
@@ -22,7 +22,7 @@ describe('BlockchainController', () => {
         MessageServer,
         Miner,
         Wallet,
-        AppService,
+        BlockchainService,
       ],
     }).compile();
   });

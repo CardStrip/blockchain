@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
-import { BlockchainController } from './blockchain.controller';
-import { AppService } from './blockchain.service';
+
 import { Blockchain } from './blockchain';
-import { MessageServer } from './websocket';
-import { TransactionPool } from './transaction';
+import { BlockchainController } from './blockchain.controller';
+import { BlockchainService } from './blockchain.service';
 import { Miner } from './miner';
+import { TransactionPool } from './transaction';
 import { Wallet } from './wallet';
+import { MessageServer } from './websocket';
 
 @Module({
   imports: [],
@@ -15,7 +16,7 @@ import { Wallet } from './wallet';
     MessageServer,
     Miner,
     Wallet,
-    AppService,
+    BlockchainService,
   ],
   controllers: [BlockchainController],
 })

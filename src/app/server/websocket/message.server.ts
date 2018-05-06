@@ -1,14 +1,15 @@
-import { Blockchain } from '../blockchain';
-import * as WebSocket from 'ws';
-import { TransactionPool, Transaction } from '../transaction';
 import { Injectable } from '@nestjs/common';
+
+import * as WebSocket from 'ws';
+
+import { Blockchain } from '../blockchain';
+import { Transaction, TransactionPool } from '../transaction';
 import { MessageTypes } from './message.types';
+import { P2P_PEERS, P2P_PORT } from '../config';
 
 @Injectable()
 export class MessageServer {
     private sockets: WebSocket[];
-    private P2P_PORT = Number(process.env.P2P_PORT || 5001);
-    private peers: string[] = process.env.PEERS ? process.env.PEERS.split(',') : [];
 
     constructor(
         private blockchain: Blockchain,
@@ -19,7 +20,7 @@ export class MessageServer {
 
     public listen() {
         const server = new WebSocket.Server({
-            port: this.P2P_PORT,
+            port: P2P_PORT,
         });
         server.on('connection', (socket: WebSocket) => {
             this.connectSocket(socket);
@@ -27,11 +28,11 @@ export class MessageServer {
 
         this.connectToPeers();
 
-        console.info(`Listening for peer-to-peer connection on: ${this.P2P_PORT}`);
+        console.info(`Listening for peer-to-peer connection on: ${P2P_PORT}`);
     }
 
     private connectToPeers() {
-        this.peers.forEach(peer => {
+        P2P_PEERS.forEach(peer => {
             const socket = new WebSocket(peer);
 
             socket.addEventListener('open', () => this.connectSocket(socket));

@@ -1,15 +1,15 @@
-import { Body } from '@nestjs/common';
-import { Get, Controller, Post } from '@nestjs/common';
-import { Blockchain } from './blockchain';
+import { Body, Controller, Get, Post } from '@nestjs/common';
+
 import { Block } from './block';
-import { AppService } from './blockchain.service';
+import { Blockchain } from './blockchain';
+import { BlockchainService } from './blockchain.service';
 import { Transaction } from './transaction';
 import { TransactionRequest } from './transaction/transaction.request';
 
 @Controller()
 export class BlockchainController {
 
-  constructor(public readonly service: AppService) {
+  constructor(public readonly service: BlockchainService) {
   }
 
   @Get()

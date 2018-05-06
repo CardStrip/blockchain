@@ -1,16 +1,17 @@
 import { Blockchain } from '../blockchain';
 import { TransactionPool, Transaction } from '../transaction';
 import { Wallet } from '../wallet';
-import { P2pServer } from '../p2p-server';
+import { MessageServer } from '../websocket';
 import { Block } from '../block';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class Miner {
-
     constructor(
         public blockchain: Blockchain,
         public transactionPool: TransactionPool,
         public wallet: Wallet,
-        public server: P2pServer,
+        public server: MessageServer,
     ) { }
 
     public mine(): Block {

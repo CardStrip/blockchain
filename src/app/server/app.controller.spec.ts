@@ -4,6 +4,10 @@ import { AppController } from './app.controller';
 import { Blockchain } from './blockchain';
 import { Block } from './block';
 import { AppService } from './app.service';
+import { TransactionPool } from './transaction';
+import { MessageServer } from './websocket';
+import { Miner } from './miner';
+import { Wallet } from './wallet';
 
 describe('AppController', () => {
   let app: TestingModule;
@@ -11,7 +15,14 @@ describe('AppController', () => {
   beforeAll(async () => {
     app = await Test.createTestingModule({
       controllers: [AppController],
-      providers: [AppService],
+      providers: [
+        TransactionPool,
+        Blockchain,
+        MessageServer,
+        Miner,
+        Wallet,
+        AppService,
+      ],
     }).compile();
   });
 

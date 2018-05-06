@@ -39,6 +39,7 @@ export class Block {
         difficulity = lastBlock.timestamp + MINING_RATE > currentTime ? difficulity + 1 : difficulity - 1 ;
         return difficulity;
     }
+
     constructor(
         public timestamp: number,
         public lastHash: string,

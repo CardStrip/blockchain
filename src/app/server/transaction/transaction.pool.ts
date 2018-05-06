@@ -1,5 +1,7 @@
 import { Transaction } from './transaction';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class TransactionPool {
     public transactions: Transaction[];
 

@@ -1,6 +1,8 @@
 import { Block } from '../block';
 import { Transaction } from '../transaction';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class Blockchain {
     public chain: Block[];
 

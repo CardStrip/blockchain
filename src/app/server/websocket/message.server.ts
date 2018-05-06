@@ -1,14 +1,11 @@
-import { Blockchain } from './blockchain';
+import { Blockchain } from '../blockchain';
 import * as WebSocket from 'ws';
-import { TransactionPool, Transaction } from './transaction';
+import { TransactionPool, Transaction } from '../transaction';
+import { Injectable } from '@nestjs/common';
+import { MessageTypes } from './message.types';
 
-enum MESSAGE_TYPES {
-    chain = 'CHAIN',
-    transaction = 'TRANSACTION',
-    clear = 'CLEAR',
-}
-
-export class P2pServer {
+@Injectable()
+export class MessageServer {
     private sockets: WebSocket[];
     private P2P_PORT = Number(process.env.P2P_PORT || 5001);
     private peers: string[] = process.env.PEERS ? process.env.PEERS.split(',') : [];
@@ -56,13 +53,13 @@ export class P2pServer {
             const data =  JSON.parse(message.data);
 
             switch (data.type) {
-                case MESSAGE_TYPES.chain:
+                case MessageTypes.chain:
                     this.blockchain.replaceChain(data.chain);
                     break;
-                case MESSAGE_TYPES.transaction:
+                case MessageTypes.transaction:
                     this.trxPool.updateOrAddTransaction(data.transaction);
                     break;
-                case MESSAGE_TYPES.clear:
+                case MessageTypes.clear:
                     this.trxPool.clear();
                     break;
                 default:
@@ -82,21 +79,21 @@ export class P2pServer {
 
     private sendChain(socket: WebSocket) {
         socket.send(JSON.stringify({
-            type: MESSAGE_TYPES.chain,
+            type: MessageTypes.chain,
             chain: this.blockchain.chain,
         }));
     }
 
     private sendTransaction(socket: WebSocket, transaction: Transaction) {
         socket.send(JSON.stringify({
-            type: MESSAGE_TYPES.transaction,
+            type: MessageTypes.transaction,
             transaction,
         }));
     }
 
     public broadcastClearTransactions() {
         this.sockets.forEach(socket => socket.send(JSON.stringify({
-            type: MESSAGE_TYPES.clear,
+            type: MessageTypes.clear,
         })));
     }
 

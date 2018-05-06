@@ -2,7 +2,9 @@ import { INITIAL_BALANCE } from '../config';
 import { ChainUtil } from '../chain.util';
 import { TransactionPool, Transaction } from '../transaction';
 import { Blockchain } from '../blockchain';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class Wallet {
     public address: string;
     public balance = INITIAL_BALANCE;

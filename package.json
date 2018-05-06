@@ -4,8 +4,6 @@
   "description": "Contains the CardStrip blockchain",
   "main": "dist/index.js",
   "scripts": {
-    "test:watch": "jest --watchAll",
-    "test": "jest",
     "format": "prettier --write \"**/*.ts\"",
     "start": "ts-node -r tsconfig-paths/register src/index.ts",
     "start:2": "set HTTP_PORT=3002 && set P2P_PORT=5002 && set PEERS=ws://localhost:5001 && npm start",
@@ -13,8 +11,11 @@
     "start:watch": "nodemon -e ts -w ./src -x npm start",
     "prestart:prod": "rm -rf dist && tsc",
     "start:prod": "node dist/main.js",
-    "test:cov": "jest --coverage",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test": "jest",
+    "test:watch": "jest --watchAll",
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "test:e2e:watch": "jest --config ./test/jest-e2e.json --watchAll",
+    "test:cov": "jest --coverage"
   },
   "repository": {
     "type": "git",
@@ -54,12 +55,14 @@
     "@nestjs/microservices": "^5.0.0-rc.2",
     "@nestjs/testing": "^5.0.0-rc.2",
     "@nestjs/websockets": "^5.0.0-rc.2",
+    "@types/shelljs": "^0.7.9",
     "@types/uuid": "^3.4.3",
     "crypto-js": "^3.1.9-1",
     "elliptic": "^6.4.0",
     "jest-cli": "^22.4.3",
     "reflect-metadata": "^0.1.12",
     "rxjs": "^6.1.0",
+    "shelljs": "^0.8.1",
     "typescript": "^2.6.2",
     "uuid": "^3.2.1"
   }

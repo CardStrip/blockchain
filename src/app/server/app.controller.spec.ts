@@ -38,4 +38,5 @@ describe('AppController', () => {
   //     expect(chain).toEqual(appController.service.blockchain.chain);
   //   });
   // });
+
 });

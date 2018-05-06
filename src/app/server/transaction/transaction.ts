@@ -24,7 +24,6 @@ export class Transaction {
             console.warn(`Amount: ${amount} exceeds balance`);
             return;
         }
-
         // returns new transaction;
         return Transaction.transactionWithOutputs(sender, [
             { amount: sender.balance - amount, address: sender.publicKey },

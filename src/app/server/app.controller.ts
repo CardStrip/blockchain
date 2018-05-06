@@ -4,7 +4,6 @@ import { Blockchain } from './blockchain';
 import { Block } from './block';
 import { AppService } from './app.service';
 import { Transaction } from './transaction';
-import { ENGINE_METHOD_DIGESTS } from 'constants';
 import { TransactionRequest } from './transaction/transaction.request';
 
 @Controller()
@@ -36,21 +35,14 @@ export class AppController {
   @Get('/mine-transactions')
   public mineTransaction() {
     const block = this.service.miner.mine();
-    console.log(`New block added: ${block.toString()}`);
+    // console.info(`New block added: ${block.toString()}`);
 
-    return this.blocks();
-  }
-
-  @Post('/mine')
-  public mine(@Body() block: Block) {
-    this.service.blockchain.addBlock(block);
-    console.info('block added ...');
-    this.service.server.sync();
     return this.blocks();
   }
 
   @Post('/transact')
   public transact(@Body() req: TransactionRequest) {
+
     let isValid = true;
     if (!req.recipient) isValid = false;
     if (!req.amount) isValid = false;

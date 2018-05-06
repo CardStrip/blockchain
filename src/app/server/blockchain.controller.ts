@@ -2,12 +2,12 @@ import { Body } from '@nestjs/common';
 import { Get, Controller, Post } from '@nestjs/common';
 import { Blockchain } from './blockchain';
 import { Block } from './block';
-import { AppService } from './app.service';
+import { AppService } from './blockchain.service';
 import { Transaction } from './transaction';
 import { TransactionRequest } from './transaction/transaction.request';
 
 @Controller()
-export class AppController {
+export class BlockchainController {
 
   constructor(public readonly service: AppService) {
   }

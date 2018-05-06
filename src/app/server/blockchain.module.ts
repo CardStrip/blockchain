@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { BlockchainController } from './blockchain.controller';
+import { AppService } from './blockchain.service';
 import { Blockchain } from './blockchain';
 import { MessageServer } from './websocket';
 import { TransactionPool } from './transaction';
@@ -17,6 +17,6 @@ import { Wallet } from './wallet';
     Wallet,
     AppService,
   ],
-  controllers: [AppController],
+  controllers: [BlockchainController],
 })
-export class AppModule {}
+export class BlockchainModule {}

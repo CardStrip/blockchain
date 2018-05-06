@@ -1,7 +1,7 @@
 import { bootstrap } from './app/server/main';
 import { MessageServer } from './app/server/websocket';
 import { Blockchain } from './app/server/blockchain';
-import { AppService } from './app/server/app.service';
+import { AppService } from './app/server/blockchain.service';
 import { Wallet } from './app/server/wallet';
 
 const boot = async () => {

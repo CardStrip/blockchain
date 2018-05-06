@@ -1,17 +1,17 @@
 import request from 'supertest';
 import { Test } from '@nestjs/testing';
-import { AppModule } from './../src/app/server/app.module';
+import { BlockchainModule } from './../src/app/server/blockchain.module';
 import { INestApplication } from '@nestjs/common';
 import { Block } from '../src/app/server/block';
 import { Transaction } from '../src/app/server/transaction';
 import { TransactionRequest } from '../src/app/server/transaction/transaction.request';
 
-describe('AppController (e2e)', () => {
+describe('BlockchainController (e2e)', () => {
   let app: INestApplication;
 
   beforeAll(async () => {
     const moduleFixture = await Test.createTestingModule({
-      imports: [AppModule],
+      imports: [BlockchainModule],
     }).compile();
 
     app = moduleFixture.createNestApplication();

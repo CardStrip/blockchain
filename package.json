@@ -1,5 +1,5 @@
 {
-  "name": "@cardstrip/ioi",
+  "name": "@cardstrip/blockchain",
   "version": "0.0.1",
   "description": "Contains the CardStrip blockchain",
   "main": "dist/index.js",
@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CardStrip/ioi.git"
+    "url": "git+https://github.com/CardStrip/blockchain.git"
   },
   "keywords": [
     "CardStrip",
@@ -30,9 +30,9 @@
   "author": "Wendell Muntslag van Amzink <wendell@cardstrip.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/CardStrip/ioi/issues"
+    "url": "https://github.com/CardStrip/blockchain/issues"
   },
-  "homepage": "https://github.com/CardStrip/ioi#readme",
+  "homepage": "https://github.com/CardStrip/blockchain#readme",
   "devDependencies": {
     "@types/crypto-js": "^3.1.39",
     "@types/express": "^4.0.39",
